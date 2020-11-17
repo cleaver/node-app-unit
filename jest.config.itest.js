@@ -1,5 +1,5 @@
 module.exports = {
-  roots: ['<rootDir>/src/test'],
+  roots: ['<rootDir>/src/itest'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
@@ -8,4 +8,5 @@ module.exports = {
   verbose: true,
   collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/src/app/**/*.ts'],
+  testEnvironment: 'node',
 };
