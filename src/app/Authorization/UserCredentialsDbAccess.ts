@@ -29,7 +29,7 @@ export class UserCredentialsDbAccess {
   ): Promise<UserCredentials | null> {
     return new Promise((resolve, reject) => {
       this.nedb.find(
-        { userName: username, password: password },
+        { username: username, password: password },
         (err: Error | null, docs: UserCredentials[]) => {
           if (err) {
             return reject(err);
@@ -39,6 +39,29 @@ export class UserCredentialsDbAccess {
             } else {
               return resolve(docs[0]);
             }
+          }
+        }
+      );
+    });
+  }
+
+  public async deleteUserCredential(
+    usersCredentials: UserCredentials
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.nedb.remove(
+        {
+          username: usersCredentials.username,
+          password: usersCredentials.password,
+        },
+        {},
+        (err: Error, numRemoved: number) => {
+          if (err) {
+            return reject(err);
+          } else if (numRemoved == 0) {
+            return reject(new Error('UserCredentials not deleted!'));
+          } else {
+            resolve();
           }
         }
       );
